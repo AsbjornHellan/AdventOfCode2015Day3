@@ -3,48 +3,45 @@ file_input = open('input_2015_day3.txt' , 'r')
 
 
 
-history = []
+town = []
 
 while 1:
     char = file_input.read(1)
-    history += char
+    town += char
     if not char:
         break
-print(history)
-print(len(history))
+print(town)
+print(len(town))
 
-dir_north = '^'
-dir_south = 'v'
-dir_east = '>'
-dir_west = '<'
+# Delive one present to each visit
 presents_delivered = 0
-
-# Delive one present for each visit
-for house in history:
-    if house == dir_north or house == dir_south or house == dir_east or house == dir_west:
+for house in town:
         presents_delivered += 1
 
-# Subtract one present for each move forward and backward
-pre_visit = '>'
-for house in history:
-    if house == '^' and pre_visit == 'v':
+# Subtract one present for each move backward
+pre_house = '>'
+for house in town:
+    if pre_house == '>' and house == '<':
         presents_delivered -= 1
-    pre_visit = house
-for house in history:
-    if house == 'v' and pre_visit == '^':
-        presents_delivered -= 1
-    pre_visit = house
-for house in history:
-    if house == '>' and pre_visit == '<':
-        presents_delivered -= 1
-    pre_visit = house
-for house in history:
-    if house == '<' and pre_visit == '>':
-        presents_delivered -= 1
-    pre_visit = house
+    pre_house = house
 
-# Subtract two presents for each square move
-        
+for house in town:
+    if pre_house == '<' and house == '>':
+        presents_delivered -= 1
+    pre_house = house
+
+for house in town:
+    if pre_house == '^' and house == 'v':
+        presents_delivered -= 1
+    pre_house = house
+
+for house in town:
+    if pre_house == 'v' and house == '^':
+        presents_delivered -= 1
+    pre_house = house
+
+# Subtract one presents for each square move
+
 
 print(presents_delivered)
 
